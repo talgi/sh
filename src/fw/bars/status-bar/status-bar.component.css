@@ -1,0 +1,10 @@
+:host {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content : space-around;
+    background-color: black; 
+    font-size: 25px;
+    color:white;
+    min-height: 26px;
+
+}

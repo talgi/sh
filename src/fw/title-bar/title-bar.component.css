@@ -1,0 +1,45 @@
+
+:host {
+    display: block;
+}
+
+.title-bar {
+    flex-grow: 1;
+    display: flex;
+    min-height: 80px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.09);
+}
+
+.menu-area {
+    display: flex; 
+    flex-direction: column; 
+    flex-grow: 1;
+    padding-right: 50px;
+}
+
+.title-bar-small {
+    flex-grow: 1;
+    display: flex;
+    min-height: 56px;
+}
+
+.small-image-holder {
+    flex-grow: 1;
+    margin: 40px 40px 40px 80px; /*up,left,down,right*/
+
+}
+
+.small-image {
+    height: 50px;
+}
+
+span {
+    margin-left: 10px;
+    margin-right: 20px;
+    font-size: 25px;
+    line-height: 50px;
+}
+
+
+
+

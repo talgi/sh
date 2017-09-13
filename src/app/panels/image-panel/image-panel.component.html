@@ -1,0 +1,36 @@
+<section class="hp-page site-page">
+  <div class="banner">
+    <div class="image-holder"></div>
+    <div class="floating-text">
+      <div class="header-title header_1">DESIGN YOUR NEW</div>
+      <div class="header-title header_2">HOME</div>
+
+      <div class ="start-btn" (click)="onClick()">
+        <a  class="start-btn content" [@focusPanel]='state' on-mouseover='toggleFocus()' on-mouseleave='toggleFocus()' [routerLink]="['/rooms']">START NOW</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!--
+<div class="image-holder">
+  <div class="title">
+    <span>Welcome to Sweet Home!</span>
+  </div>
+
+
+
+  <div class="floating-text">
+    <div class="header-title header_1">DESIGN YOUR NEW</div>
+    <div class="header-title header_2">HOME</div>
+    <a class="green-btn bottom">START NOW</a>
+  </div>
+
+</div>
+
+<fw-panel>
+
+</fw-panel>
+
+-->

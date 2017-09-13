@@ -1,0 +1,82 @@
+:host {
+       
+
+flex-grow: 1;
+/*display: inline-grid;*/
+/*border: solid 4px yellow;*/
+/*width:50%*/
+
+}
+
+.group {
+ flex-grow: 1;
+display:flex;
+flex-direction: column;
+align-content: flex-end;
+/*flex-wrap:wrap;*/
+
+margin-bottom: 20px;
+/*background-color: #b9acac;*/
+height: 350px;
+border-radius: 5%;
+justify-content: center;
+border: 4px solid transparent;
+ /*border: solid 4px blue;*/
+}
+
+
+.group-item{
+
+display:flex;
+flex-grow: 1;
+border: #b9acac;
+margin:2px;
+background-color: #b9acac;
+flex-wrap: wrap ;
+justify-content: center;
+align-items: center;
+border-radius: 5%; /*round edges*/
+
+}
+
+
+.item-image{
+      display: flex;
+      width:280px;
+      height:260px;
+      border-radius: 5%; /*round edges*/
+}
+
+
+.room-name {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 2.5rem;
+    /*display: flex;*/
+    line-height: 1.1;
+    font-weight: 100;
+          
+    /*flex-grow: 1;*/
+
+
+    /*font-size: 3rem;*/
+ 
+    color: #b9acac;
+    
+ /*   margin-top: 20px;
+    margin-bottom: 10px;*/
+   /* justify-content: center;
+    align-self:flex-start;*/
+}
+
+.index {
+    
+    display: flex;
+    background-color: #555;
+    color: white;
+    align-items: center;
+    justify-content: center;
+     width: 80px;
+         font-size: 32px;
+}

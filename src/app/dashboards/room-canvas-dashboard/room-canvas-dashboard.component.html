@@ -1,0 +1,42 @@
+<div class="dashboard">
+  <div class="text-center">
+    <div class="headline">
+      <h1>Your room layout</h1>
+      <h2>Draw the Outlines of your room (in Meter).</h2>
+    </div>
+  </div>
+
+  <div class="flex-container" fxLayout="row" fxLayoutAlign="center">
+
+    <!--<div fxFlex="100" class="canvas--wrap">-->
+    <room-canvas>
+    </room-canvas>
+
+    <!--<div fxFlex="350px" class="side--menu">
+    <button type="button" class="btn btn-primary">Draw</button>
+  </div>-->
+
+    <!-- <div className="canvas-side">
+      <div className="col-md-3"></div>
+      <div className="col-md-6">
+        <div className="canvas-wraper">
+          <span>sdfsdf</span>
+        </div>
+      </div>
+    </div>
+
+
+    <div className="actions text-center">
+      <a  className="green-btn next">Save drawing </a>
+      <a  className="grey-btn next">Clear Board</a>
+    </div>-->
+    <div fxFlex="350px" class="side--menu">
+      <div class="start-btn">
+        <a class="start-btn content" [routerLink]="['/authenticated/proposal']" [@focusPanel]='state' on-mouseover='toggleFocus()' on-mouseleave='toggleFocus()'>Save Drawing</a>
+      </div>
+      <div class="start-btn">
+        <a class="start-btn content" [@focusPanel]='state' on-mouseover='toggleFocus()' on-mouseleave='toggleFocus()'>Clear Board</a>
+      </div>
+    </div>
+  </div>
+  <!--style={{ width: '500px', margin: 'auto' }} </div>-->

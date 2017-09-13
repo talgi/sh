@@ -1,0 +1,81 @@
+<!--<input type="checkbox" id="check" style="display:none;">
+
+
+<label for="check">
+<img src="http://lorempixel.com/400/400/" width="200">
+</label>
+
+<label for="check">
+<div id="cover">
+<div id="box">
+<img src="http://lorempixel.com/400/400/" width="400">
+</div>
+</div>
+</label>-->
+<div class="group">
+
+ <!--  <div class="popup" >
+   <div class="popuptext" id="myPopup" on-mouseleave='showInfo()'>A Simple Popup!
+      <img class="item-image" [src]="'/assets/items/' + item.catalogName + '.jpg'">
+    </div>
+  </div>-->
+  <div>
+    <img class="item-image" [src]="'/assets/items/' + item.catalogName + '.jpg'" on-mouseover='move()' on-mouseleave='move()'  ><!--(mousemove)="coordinates($event)"-->
+  </div>
+
+
+  <div class="item-header">
+    <span>{{ item.name }}</span>
+    <div class="item-description">
+      <span>{{ item.description }}</span>
+    </div>
+
+
+  </div>
+  <div class="buy-button">
+    <button type="button" class="btn btn-primary">Buy Item</button>
+  </div>
+  <!--<div class="index">
+    <span>{{ index }}</span>
+  </div>
+  <div class="country-name">
+    <span>{{ country.name }}</span>
+  </div>
+  <div class="epi-index">
+    <span>{{ country.epiIndex }}</span>
+  </div>-->
+</div>
+
+
+
+
+
+<!-- <label for="check">
+      <div id="cover">
+        <div id="box">
+         <span class="group-clicked">
+            <!--<div>
+              <img class="item-image" [src]="'/assets/items/' + item.catalogName + '.jpg'" >
+            </div>
+            <div class="item-header-clicked">
+            <span>{{ item.name }}</span>
+              <div class="item-description-clicked">
+                <span>{{ item.description }}</span>
+              </div>
+            </div>
+            <div class="buy-button-clicked">
+              <button type="button" class="btn btn-primary">Buy Item</button>
+            </div>
+
+           </span>
+        </div>
+      </div>
+        </label>  -->
+
+
+
+
+<!--    <input type="checkbox" id="check" style="display:none;">
+    <label for="check">
+    <img class="item-image" [src]="'/assets/items/' + item.catalogName + '.jpg'" [alt]="item.name">
+    </label>-->

@@ -1,0 +1,14 @@
+:host {
+display:flex;
+margin: 5px;
+   
+    /*flex-direction: column;*/
+    /*display:flex;
+    flex-wrap:wrap;
+    margin: 10px;
+    margin-bottom: 10px;
+    background-color: #eee;
+    border: 3px solid #000;
+    align-content: stretch;*/
+    /*width:50%;*/
+}

@@ -1,0 +1,26 @@
+<div class="group">
+  <!-- <div class="index">
+      <span>{{ index }}</span>
+    </div>-->
+
+  <!--<div class="group-item">
+      <img class="room-image" [src]="'/assets/rooms/'+ room.name + '.png'" [alt]="room.name">
+    </div>-->
+  <div  class="group-item" on-click="onClick()">
+      <img class="room-image" [src]="room.url" [alt]="room.name" >
+  </div>
+
+
+
+
+  <div class="room-name">
+    <span>{{ room.name }}</span>
+  </div>
+  <!--<div class="epi-index">
+      <span>{{ room.epiIndex }}</span>
+    </div>-->
+</div>
+
+
+
+

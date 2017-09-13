@@ -1,0 +1,32 @@
+<nav >
+  <ul >
+    <li *ngFor="let item of menuService.items"> 
+  
+     <!-- <fw-menu-item [item]="item"
+                    [ngClass]="{'vertical-menu': menuService.isVertical }"
+                    [parentIsPopup]="false">
+      </fw-menu-item>-->         
+   <a 
+    [routerLink]="item.route"  routerLinkActive="router-link-active">
+      <h3 >{{ item.text.toUpperCase() }}  </h3>
+    </a>
+         
+
+   
+     <!--[ngClass]="{'router-link-active': isActiveRoute }">-->  
+     <!-- <fw-menu-item [item]="item"  [ngClass]="{'vertical-menu': menuService.isVertical }">
+      </fw-menu-item>-->
+      
+    </li>
+  </ul>
+</nav>
+
+<!--
+<button 
+      *ngIf="!menuService.showingLeftSideMenu"
+      class="btn btn-sm"
+      [ngClass]="{'horizontal': !menuService.isVertical }"
+      (click)="menuService.toggleMenuOrientation()">
+  <span *ngIf="menuService.isVertical" class="glyphicon glyphicon-menu-up"></span>
+  <span *ngIf="!menuService.isVertical" class="glyphicon glyphicon-menu-left"></span>
+</button>-->

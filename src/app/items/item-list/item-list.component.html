@@ -1,0 +1,28 @@
+<ul class="list-group">
+  <li class="list-group-item">
+    <fw-panel *ngFor="let item of items; let i=index">
+    
+      <div class="items-row" *ngIf="i%2 == 0">
+
+        <app-item-panel [item]="items[i]" [index]="i+1" (photoToggled)="photoToggled($event)">
+        </app-item-panel>
+
+        <app-item-panel *ngIf="i+1 <=items.length" [item]="items[i+1]" [index]="i+2" (photoToggled)="photoToggled($event)">
+        </app-item-panel>
+
+      </div>
+
+    </fw-panel>
+  </li>
+</ul>
+
+
+
+<!--
+<a class="lightbox" href="#goofy">
+   <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/158388/goofy.jpg"/>
+</a> 
+<div class="lightbox-target" id="goofy">
+   <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/158388/goofy.jpg"/>
+   <a class="lightbox-close" href="#"></a>
+</div>-->

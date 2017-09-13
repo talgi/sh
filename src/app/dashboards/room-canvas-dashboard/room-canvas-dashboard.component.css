@@ -1,0 +1,84 @@
+:host{
+    flex-direction: column;
+}
+.flex-container{
+    display: flex;
+    flex-direction: row;
+    
+    
+    justify-content: center;
+    /*align-content: center;*/
+    /*align-items:center*/
+}
+
+
+.dashboard {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+div {
+    display: block;
+}
+
+h1 {
+
+    font-size: 7.375rem;
+    font-family: 'Playball', cursive;
+    margin-top: 0;
+    margin-bottom: 1;
+    font-weight: 500;
+    line-height: 1.1;
+    display: block;
+    text-align: center;
+    color: #b9acac;
+}
+h2{
+    font-size: 3.188rem;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: lighter;
+    line-height: 1;
+    color: #b9acac;
+    display: block;
+}
+
+
+
+
+.side--menu{
+   display: flex;
+     align-content: center;
+    flex-direction: column;
+    width:15%;
+    height:100vh;
+    background-color:/*'transparent';*/ '#fff';
+    border-right: 1px solid #eee;
+    margin-left:100px;
+    margin-top:70px;
+}
+
+.start-btn{
+    display: flex;
+    text-decoration: none;
+    background-color: 'transparent';
+    align-content: center;
+    padding: 10px;
+    margin: 5px;
+    width:100%;
+}
+
+.start-btn .content{
+    display: flex;
+    justify-content: center;
+    font-size:2.5rem;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}

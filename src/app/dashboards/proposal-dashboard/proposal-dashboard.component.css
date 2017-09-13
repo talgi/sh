@@ -1,0 +1,114 @@
+:host{
+display: flex;
+flex-direction: row;
+}
+
+.all{
+      /* border:10px solid red;*/
+      display: flex;
+      flex-direction: row;
+      
+      align-content: space-around;
+     /*justify-content: space-around;
+      align-items: stretch;*/
+}
+
+.canvas{
+    margin-left: 70px;
+}
+
+
+#popup
+{
+    /*width:230px;
+    height:20px;
+    border-radius: 50%;
+    background-color: red;
+    right:400px;*/
+    position:absolute;
+ 
+         z-index: 1; 
+    
+}
+
+.popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;     z-index: 1; 
+}
+
+/* The actual popup */
+.popup .popuptext {
+    visibility: hidden;
+    width: 500px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 20px;
+    padding: 8px 0;
+    z-index: 1;
+    position:absolute;
+    bottom: 0px;
+    left:100px;
+    margin-left: -80px;
+}
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
+.current{
+    width:20px;
+    height:20px;
+    border-radius: 50%;
+    background-color: red;
+   position:absolute;
+}
+.next{
+    width:20px;
+    height:20px;
+    border-radius: 50%;
+    background-color: yellow;
+    background-position-x:100;
+    right:400px;
+}
+
+
+#circle
+{
+    width:20px;
+    height:20px;
+    border-radius: 50%;
+    background-color: red;
+    position:absolute;
+    right:400px;
+      z-index: 1;    
+}*/
