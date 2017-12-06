@@ -13,13 +13,14 @@ declare let fabric;
 export class ProposalCanvasComponent implements OnInit {
 
   private canvas;
-  private canvasWidth = 700;
-  private canvasHeight = 700;
-  private hightOffset = 50;
-  private widthOffset = 50;
+  private canvasWidth = 800;
+  private canvasHeight = 800;
+  private hightOffset = 0;//50;
+  private widthOffset = 0;//50;
   private itemDataList;
   private dataItemsResponse;
   private itemsData = []
+  private angle = 0;
 
 
   constructor(private ele: ElementRef, private dataService: AppDataService) { }
@@ -62,19 +63,29 @@ export class ProposalCanvasComponent implements OnInit {
         },
         repeat: 'repeat'
       });
-
-      canvas.add(new fabric.Polygon([
+      let fbp = new fabric.Polygon([
         { x: 0, y: 0 },
         { x: width, y: 0 },
         { x: width, y: height },
         { x: 0, y: height }], {
-          left: 50,
-          top: 50,
+          left: 0,//50,
+          top: 0,//50,
           // angle: -30,
           fill: pattern,
           objectCaching: false,
           selectable: false,
-        }));
+        });
+      canvas.add(fbp);
+      canvas.sendToBack(fbp);
+
+
+
+
+
+
+
+
+
 
       /*canvas.add(new fabric.Rect(
         {
@@ -105,31 +116,135 @@ export class ProposalCanvasComponent implements OnInit {
 
     });
 
-    this.dataService.getProposal().subscribe(
 
+    /*let coords = [];
+    for (let coord of this.dataService.coordinates) {
+      coords.push({ 'x': coord.x / 2, 'y': coord.y / 2 });
+    }*/
+    let coords = [];
+    for (let coord of this.dataService.coordinates) {
+      coords.push({ 'x': coord.x, 'y': coord.y });
+    }
+
+    let roomWals = new fabric.Polygon(coords
+      , {
+        // left: coords[2].x,//50,
+        // top: coords[2].y,//50,
+        // angle: -30,
+        stroke: 'red',
+        strokeWidth: 4,
+        fill: 'rgba(30,0,30,0)',
+        objectCaching: false,
+        selectable: false,
+
+
+      });
+    //canvas.add(roomWals);
+    //canvas.sendToBack(roomWals);
+
+    var group = new fabric.Group();
+
+    // canvas.add(roomWals);
+    group.addWithUpdate(roomWals);
+      // group.set('flipY', true);
+    canvas.add(group);
+
+
+
+    this.dataService.getProposal().subscribe(
       dataItemsResponse => {
         this.dataItemsResponse = dataItemsResponse;
-        this.itemsData = this.dataItemsResponse.map(itemdata => new ItemData(itemdata.width,
-          itemdata.length, itemdata.position, itemdata.direction, itemdata.furniture));
         console.log("Answer :" + dataItemsResponse);
-        console.log("Answer :" + JSON.stringify(this.dataItemsResponse));
+        console.log("Answer :" + JSON.stringify(this.dataItemsResponse.furnitures));
+        var style = "country";//JSON.stringify(this.dataItemsResponse.style);
+
+        this.itemsData = this.dataItemsResponse.furnitures.map(itemdata => new ItemData(itemdata.width,
+          itemdata.length, itemdata.position, itemdata.direction, itemdata.furniture));
+
+        let i = 0;
         for (let entry of this.itemsData) {
+
           console.log("Entry:" + entry);
-          //console.log(entry); // 1, "string", false
-          let img = fabric.Image.fromURL('assets/data/test/' + entry.furniture + '.png', function (img) {
-            //canvas.backgroundImage = img;
-            img.width = +entry.width;
-            img.height = +entry.length;
-            console.log("img LEFT : " + entry.position[0].x / 2);
-            img.left = + entry.position[0].x / 2; //+this.widthOffset 
-            img.top = + entry.position[0].y / 2; //this.heightOffset
-            //img.angle = entry.direction;
-            canvas.add(img);
+          console.log(entry.position[0]); // 1, "string", false
+
+          let num: Number;
+          num = (entry.direction + 180) % 360;//entry.direction;
+
+          fabric.Image.fromURL('assets/data2/cad/' + entry.furniture + '.png', function (img) {
+            //canvas.backgroundImage = img;.
+            //if (entry.furniture == "armchair") {
+            console.log("Furniture : " + entry.furniture);
+            console.log("img X : " + (+ entry.position[0]));
+            console.log("img Y : " + (+ entry.position[1]));
+            console.log("Direction : " + (entry.direction + 180) % 360);
+
+            /*img.width = +entry.length / 2;
+            img.height = +entry.width / 2;
+            img.left = ((+ entry.position[0] / 2)); //+this.widthOffset 
+            img.top = (+ entry.position[1] / 2); //this.heightOffset
+            img.centeredRotation = true;
+            img.originX = 'center'
+            img.originY = 'center'*/
+
+            img.width = +entry.length;
+            img.height = +entry.width;
+            img.left = (+ entry.position[0]); //+this.widthOffset 
+            img.top = (+ entry.position[1]); //this.heightOffset
+            img.centeredRotation = true;
+            img.originX = 'center'
+            img.originY = 'center'
+  
+
+            img.setAngle((entry.direction + 180) % 360);
+
+            group.addWithUpdate(img);
+            i++;
+
+            if (i == 8) {
+
+               // group.set('flipY', true);
+               // group.set('flipY', false);
+
+              //group.originX = 'center'
+              //group.originY = 'center'
+              //group.left = 400;
+              //group.top = 350;
+
+
+              group.set({ scaleX: 0.5, scaleY: 0.5 });
+              group.originX = 'center'
+              group.originY = 'center'
+              group.left = 400;
+              group.top = 350;
+            }
+
+            //canvas.add(img);
+            /*let x = (+ entry.position[0] / 2) - 100;
+            let y = (+ entry.position[1] / 2) - 100;
+            let width = +entry.width / 2;
+            let height = +entry.length / 2;*/
+
+            //img.set({ left: x, top: y,originX:'center',originY:'center', width: height, length: width, centeredRotation: true });
+
+            //entry.direction;
+            /*
+            var oImg =
+            oImg.setAngle(num).setCoords();
+            canvas.add(oImg);*/
+
+            //canvas.add(img);
+            canvas.renderAll();
+
+            // }
           });
         }
+
+        canvas.renderAll();
+        //canvas.add(new fabric.Group(images));
+
       });
 
-    console.log("Entry:");
+
 
 
     /*this.canvas.add(new fabric.Rect({

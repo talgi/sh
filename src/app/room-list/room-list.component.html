@@ -1,7 +1,5 @@
-
-
 <fw-panel *ngFor="let room of rooms; let i=index">
-  <!--<div class="projected-title">Country</div>-->
+
   <app-room-panel *ngIf="isFirst" [room]="room" [index]="i+1" (itemClicked)="itemClicked($event)">
   </app-room-panel>
 
@@ -9,8 +7,3 @@
   </question-panel>
 
 </fw-panel>
-
-
-<!--<button (click)="onClick()"></button >-->
-
-

@@ -5,8 +5,11 @@
  <!-- <div id="popup" #popup ></div>-->
 
   <div class="popup" id="popup" #popup [style.left]="clientX" [style.top]="clientY">
-    <div class="popuptext" id="myPopup" >A Simple Popup!
-     <!-- <img class="item-image" [src]="'/assets/items/' + item.catalogName + '.jpg'">-->
+    <div  id="myPopup" class="popuptext">
+        <h2 >Furniture {{item.id}} {{item.name}}</h2>
+       <img class="item-image" [src]="'/assets/items/alsager-end-table-1.jpg'">
+       <div> {{item.description}} </div>
+
     </div>
   </div>
   <!--
@@ -28,6 +31,5 @@
 
   <proposal-canvas class="canvas">
   </proposal-canvas>
-
-
+  
 </div>

@@ -2,9 +2,9 @@ import { Component, OnInit, AfterViewInit, ViewChild, ViewChildren, Renderer2, O
 import { ActivatedRoute } from '@angular/router';
 
 import { Observable, Observer } from "rxjs";
-
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { AppDataService } from '../../services/app-data.service';
-import { Item } from '../../view-models/Item';
+import { Item, ProposalItem } from '../../view-models/Item';
 
 @Component({
   selector: 'app-item-list',
@@ -20,10 +20,12 @@ export class ItemListComponent implements OnInit, AfterViewInit {
   @Output() itemToggled: EventEmitter<Item> =
   new EventEmitter<Item>();
 
+  private dataItemsResponse;
 
-  
+
+
   count = 0;
-  items: Array<Item>;
+  items: Array<ProposalItem>;
   //circle: HTMLElement;
 
 
@@ -31,14 +33,42 @@ export class ItemListComponent implements OnInit, AfterViewInit {
   source = Observable.from(this.numbers);
   sourceMouseMove :any;*/
 
-  constructor(private dataService: AppDataService, private rd: Renderer2) {
+  constructor(private dataService: AppDataService, private rd: Renderer2, private http: Http) {
 
   }
 
 
   ngOnInit() {
     console.log("on item List onInit");
-    this.items = this.dataService.getItems();
+
+    this.dataService.getProposal().subscribe(
+      dataItemsResponse => {
+        this.dataItemsResponse = dataItemsResponse;
+        console.log("Answer :" + dataItemsResponse);
+        console.log("Answer :" + JSON.stringify(this.dataItemsResponse.furnitures));
+        var style = "country";//JSON.stringify(this.dataItemsResponse.style);
+
+        this.items = this.dataItemsResponse.furnitures.map(itemdata => 
+          new ProposalItem(1, itemdata.furniture, itemdata.furniture, '')
+          //asynchronous method converting the returned Observable
+          //(http.get returns Observable) and setting it to the message property.
+        );
+
+
+        let i = 0;
+        for (let entry of this.items) {
+
+          console.log("Entry:" + entry);
+
+        }
+
+      });
+
+
+
+
+    //this.items = this.dataService.getItems();
+
     /*this.sourceMouseMove = 
     Observable.fromEvent(document, "mousemove")
      .map((e: MouseEvent) => {

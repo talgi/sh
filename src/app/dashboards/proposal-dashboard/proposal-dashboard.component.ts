@@ -26,12 +26,14 @@ export class ProposalDashboardComponent implements OnInit {
   ngOnInit() {
     this.targetClass = 'next';
     this.targetProp = 'yellow';
-
+    this.item = {'id':1,'name':'name','catalogName':'catalogName','description':'description'}
 
     let itemDataList = this.dataService.getItemsData();
     console.log("First Item" + itemDataList[0].width);
-    for (let entry in itemDataList) {
-      console.log(entry); // 1, "string", false
+    for (let entry of itemDataList) {
+      
+
+      console.log(entry.furniture); // 1, "string", false
     }
   }
 
@@ -48,8 +50,8 @@ export class ProposalDashboardComponent implements OnInit {
 
   //Set pop up cordinats!
   private coordinates(event: MouseEvent): void {
-    this.clientX = event.clientX + 'px';
-    this.clientY = event.clientY + 'px';
+    this.clientX = event.clientX  + 'px';
+    this.clientY = event.clientY + 300 + 'px';
     //console.log( this.clientX);
     //console.log( this.clientY);
 

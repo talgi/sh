@@ -22,7 +22,6 @@ export class RoomsDashboardComponent implements OnInit {
 
   itemClickedE(oldQuestion: OldQuestion) {
       this.header2 = oldQuestion.header;
-      console.log("header="+  this.header2);
   }
 
 }

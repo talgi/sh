@@ -81,8 +81,6 @@ export class RoomCanvasDashboardComponent implements OnInit {
 
   }
     //send request*/
-
-
   }
 
 

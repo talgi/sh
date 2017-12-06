@@ -22,7 +22,7 @@ import { AuthGuard } from './services/auth-guard.service';*/
 
 export const appRoutes: Routes = [
   /*{ path: 'canvas', component: RoomBlueprintCanvasComponent },*/
-
+   { path: '', redirectTo: 'authenticated', pathMatch: 'full' },
   { path: 'signin', component: SignInComponent},
   { path: 'register', component: RegisterUserComponent},
   {  path: 'authenticated', component: AuthenticatedUserComponent,
@@ -34,10 +34,12 @@ export const appRoutes: Routes = [
       { path: 'rooms', component: RoomsDashboardComponent },
       { path: 'proposal', component: ProposalDashboardComponent },
       { path: 'canvas', component: RoomCanvasDashboardComponent/*RoomCanvasComponent*/ },
+         { path: '**', component: WelcomeDashboardComponent },
     ]
   },
   /*{ path: '', component: AuthenticatedUserComponent },*/
-  { path: '**', component: AuthenticatedUserComponent },
+  { path: '', component: AuthenticatedUserComponent },
+  /*{ path: '**', component: AuthenticatedUserComponent },*/
   /* { path: 'signin', component: SignInComponent },
    { path: 'register', component: RegisterUserComponent },
    { path: 'authenticated', component: AuthenticatedUserComponent, canActivate: [AuthGuard],

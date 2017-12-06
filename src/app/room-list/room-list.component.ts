@@ -57,12 +57,12 @@ export class RoomListComponent implements OnInit {
     /* this.dataService.getCountries().subscribe(
        countries => {
          this.allCountries = countries;
- 
+
          this.count = this.route.snapshot.params['count'];
          this.updateList();
        }
      );
- 
+
      this.route.params.subscribe(params => {
        this.count = params['count'];
        this.updateList();
@@ -104,16 +104,16 @@ export class RoomListComponent implements OnInit {
 
       oldQuestion => {
         this.oldQuestion = oldQuestion;
-       
+
         //else{
         this.itemClickedE.emit(this.oldQuestion);
-        this.rooms = this.oldQuestion.choices.map(c => new MyRoom(c.num, c.ans.pic));
+        this.rooms = this.oldQuestion.choices.map(c => new MyRoom(c.num, 'assets/data2/'+c.ans.pic));
         this.isFirst = false;
         console.log("Answer :" + oldQuestion);
         console.log("Answer :" + JSON.stringify(this.oldQuestion));
         console.log("Answer Done?:" + JSON.stringify(this.oldQuestion.done));
 
-        if (JSON.stringify(this.oldQuestion.done) === "true") {
+        if (JSON.stringify(this.oldQuestion.done) === "\"true\"") {
           console.log("Answer inside if :" + oldQuestion);
           this.router.navigate(['/authenticated/canvas']);
         }

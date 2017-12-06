@@ -26,8 +26,7 @@ flex-direction: row;
     background-color: red;
     right:400px;*/
     position:absolute;
- 
-         z-index: 1; 
+    z-index: 1; 
     
 }
 
@@ -35,6 +34,7 @@ flex-direction: row;
     position: relative;
     display: inline-block;
     cursor: pointer;
+    border-radius: 3px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -44,11 +44,12 @@ flex-direction: row;
 /* The actual popup */
 .popup .popuptext {
     visibility: hidden;
-    width: 500px;
-    background-color: #555;
-    color: #fff;
+    width: 300px;
+    background-color: white;
+    
+    color: Black;
     text-align: center;
-    border-radius: 20px;
+
     padding: 8px 0;
     z-index: 1;
     position:absolute;
@@ -60,8 +61,18 @@ flex-direction: row;
     visibility: visible;
     -webkit-animation: fadeIn 1s;
     animation: fadeIn 1s;
+    border-radius:15px;
+    border: 3px solid #20B2AA;
+    height:400px;
+    width:400px;
 }
 
+.item-image {
+    border-radius: 5px;
+    height:100px;
+    width:100px;
+  
+}
 
 /* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
@@ -73,6 +84,9 @@ flex-direction: row;
     from {opacity: 0;}
     to {opacity:1 ;}
 }
+
+
+
 
 
 

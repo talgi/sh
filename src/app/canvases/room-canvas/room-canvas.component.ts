@@ -46,7 +46,7 @@ export class RoomCanvasComponent implements OnInit {
   ngOnInit() {
 
     this.setCanvas();
-   
+
     /************************************************************/
 
 
@@ -147,10 +147,9 @@ export class RoomCanvasComponent implements OnInit {
             //let points = [pointer.x, pointer.y, pointer.x, pointer.y];
             this.circles[0].line1 = this.currLine;
             let firstLine = this.circles[0].line2;
-            if( firstLine.get('x2') !=  firstLine.get('x1'))
-            {
-              firstLine.set({x1:this.circles[0].line1.get('x2')}); 
-              this.circles[0].left = firstLine.get('x1')-4;
+            if (firstLine.get('x2') != firstLine.get('x1')) {
+              firstLine.set({ x1: this.circles[0].line1.get('x2') });
+              this.circles[0].left = firstLine.get('x1') - 4;
             }
             //this.circles[0].line2.set({x1:this.currLine.get('x2')});
             //this.circles[0].line2.set({y1:this.currLine.get('y2')});
@@ -179,8 +178,8 @@ export class RoomCanvasComponent implements OnInit {
   setCoordinants() {
     for (let l of this.lines) {
       let point = new Point();
-      point.x = l.get('x1') * 2;
-      point.y = l.get('y1') * 2;
+      point.x = Math.floor(l.get('x1') * 2);
+      point.y = Math.floor(l.get('y1') * 2);
       this.points.push(point);
     }
 
@@ -271,16 +270,16 @@ export class RoomCanvasComponent implements OnInit {
     return c;
   }
 
-setCanvas(){
-   var width = 800;
-   var height = 600;
-   let color = '#969696';
+  setCanvas() {
+    var width = 800;
+    var height = 600;
+    let color = '#969696';
     //create canvas
     this.canvas = new fabric.Canvas('canvas', {
       width: width,//this.ele.nativeElement.parentElement.clientWidth,
       height: height,//this.ele.nativeElement.parentElement.clientHeight
       fill: '#aaa',
-  });
+    });
 
 
     var grid = 25;//size of snaps
@@ -298,17 +297,8 @@ setCanvas(){
       selection: false
     }));
 
-    this.canvas.add(new fabric.Rect({
-      left: 0,
-      top: 0,
-      fill: 'transparent',
-      width: 4000,
-      selectable: false,
-      evented: false,
-      selection: false,
-      height: measurementThickness
-    }));
-    //upper 1's 
+
+    //upper 1's
     var tickSize = 10;
     var tickSizeFoot = 40;
     var tickSizeHalf = 20;
@@ -357,7 +347,7 @@ setCanvas(){
       // vertical
       if (isHalf || i == 0) {
         this.canvas.add(new fabric.Line
-        ([location1, measurementThickness, location1, width], { stroke: isFoot ? color/*'#888'*/ : color/*'#ccc'*/, selectable: false }));
+          ([location1, measurementThickness, location1, width], { stroke: isFoot ? color/*'#888'*/ : color/*'#ccc'*/, selectable: false }));
 
         // horizontal
         this.canvas.add(new fabric.Line([measurementThickness, location1, width, location1], { stroke: isFoot ? color/*'#888'*/ : color/*'#ccc'*/, selectable: false }));
@@ -387,7 +377,7 @@ setCanvas(){
           fontFamily: 'san-serif',
           selectable: false,
           evented: false,
-          color:'#b9acac'
+          color: '#b9acac'
         }));
         footCount++;
       }
@@ -421,7 +411,7 @@ setCanvas(){
           fontFamily: 'san-serif',
           selectable: false,
           evented: false,
-          color:'#b9acac'
+          color: '#b9acac'
         }));
       }
 
@@ -458,11 +448,8 @@ setCanvas(){
         p.line2.setText(p.line2.text, p.line2);
 
       }
-
     });
-
-}
-
+  }
 }
 
 
@@ -481,7 +468,7 @@ setCanvas(){
               point.x = l.get('x1');
               point.y = l.get('y1');
               console.log("line X:" + point.x + "line Y:" + point.y);
-         
+
 
               if (i > 0) {
                 point = new Point();
@@ -577,11 +564,11 @@ setCanvas(){
   /*  drawBackground() {
         var VERTICAL_LINE_SPACING = 12;
         let i = this.contextcontext.canvas.height;
-  
+
         this.context.clearRect(0, 0, canvas.width, canvas.height);
         this.context.strokeStyle = 'lightgray';
         this.context.lineWidth = 0.5;
-  
+
         while (i > VERTICAL_LINE_SPACING * 4) {
           this.context.beginPath();
           this.context.moveTo(0, i);
@@ -590,16 +577,16 @@ setCanvas(){
           i -= VERTICAL_LINE_SPACING;
         }
       }
-  
+
       drawSpritesheet() {
         this.context.drawImage(spritesheet, 0, 0);
       }
-  
- 
-  
+
+
+
       updateReadout(x, y) {
         readout.innerText = '(' + x.toFixed(0) + ', ' + y.toFixed(0) + ')';
       }
-  
- 
+
+
 }   */

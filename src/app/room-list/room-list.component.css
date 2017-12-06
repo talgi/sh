@@ -2,9 +2,9 @@
 :host {
 
 
- margin: 50px 100px 100px 100px;
+ margin: 100px 100px 100px 100px;
 display:inline-grid;
-grid-template-columns: 24em  24em 24em 24em; /*22em repeat(3,3em 22em)*/
+grid-template-columns: 22em  22em 22em 22em; /*22em repeat(3,3em 22em)*/
 /*border: solid 4px red;*/
 /*grid-template-rows:15em 15em 15em 15em;*/
     
