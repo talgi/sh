@@ -1,11 +1,10 @@
 :host {
-    display: flex;
-    background-color: #F5F5F5; 
-    flex-grow: 1;
+  display: flex;
+  background-color: #F5F5F5;
+  flex-grow: 1;
 }
 
 .body-style {
-    padding: 20px;
-    flex-grow: 1;
-    overflow: auto;
+  margin-top: 90px;
+  flex-grow: 1;
 }

@@ -19,12 +19,12 @@ export interface FrameworkConfigSettings {
 export class FrameworkConfigService {
 
     showLanguageSelector = false;
-    showUserControls = true;
+    showUserControls = false;
     showStatusBar = true;
     showStatusBarBreakpoint = 0;
     socialIcons = new Array<IconFiles>();
 
-    
+
 
     configure(settings: FrameworkConfigSettings) : void {
         Object.assign(this, settings);

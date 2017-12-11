@@ -10,7 +10,7 @@ import { initialMenuItems } from './app.menu';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
+
   constructor (private frameworkConfigService: FrameworkConfigService,
                private menuService: MenuService) {
 
@@ -21,7 +21,7 @@ export class AppComponent {
         { imageFile: 'assets/social-twitter-bw.png', alt: 'Twitter', link: 'http://www.twitter.com' }
       ],
       showLanguageSelector: false,
-      showUserControls: true,
+      showUserControls: false,
       showStatusBar: true,
       showStatusBarBreakpoint: 800
     };

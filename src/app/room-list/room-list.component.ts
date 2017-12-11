@@ -85,7 +85,7 @@ export class RoomListComponent implements OnInit {
 
     this.rooms.pop();
 
-    //    this.router.navigate(['/authenticated/rooms']);*/
+    //    this.router.navigate(['/rooms']);*/
   }
   updateList() {
     /*   this.rooms = this.count > 0 ? this.allRooms.slice(0, this.count) : this.allRooms;*/
@@ -113,9 +113,9 @@ export class RoomListComponent implements OnInit {
         console.log("Answer :" + JSON.stringify(this.oldQuestion));
         console.log("Answer Done?:" + JSON.stringify(this.oldQuestion.done));
 
-        if (JSON.stringify(this.oldQuestion.done) === "\"true\"") {
+        if (JSON.stringify(this.oldQuestion.done) === "true") {
           console.log("Answer inside if :" + oldQuestion);
-          this.router.navigate(['/authenticated/canvas']);
+          this.router.navigate(['/canvas']);
         }
       });
 

@@ -16,14 +16,14 @@ import { trigger, state, style, transition, animate, keyframes, Input } from '@a
         //transform: 'scale(1)'
       })),
       state('active-start', style({
-        
+
         //transform: 'scale(1.12)',
         //opacity: 0.7,
        background: '#ffffff',
        border: '1px solid #3fb5b7',
        color:'#3fb5b7'
-       
-         
+
+
       })),
       transition('inactive-start => active-start', animate('400ms ease-in')),
       transition('active-start => inactive-start', animate('400ms ease-out'))
@@ -47,8 +47,8 @@ export class RoomCanvasDashboardComponent implements OnInit {
     this.state = (this.state === 'inactive-start' ? 'active-start' : 'inactive-start');
   }
 
-  onClick() {   
-    this.router.navigate(['/authenticated/proposal']);
+  onClick() {
+    this.router.navigate(['/proposal']);
 
     /*console.log("itemID:" + room.id);
     console.log("isFirst:" + this.isFirst);
@@ -62,7 +62,7 @@ export class RoomCanvasDashboardComponent implements OnInit {
 
       oldQuestion => {
         this.oldQuestion = oldQuestion;
-       
+
         //else{
         this.itemClickedE.emit(this.oldQuestion);
         this.rooms = this.oldQuestion.choices.map(c => new MyRoom(c.num, c.ans.pic));
@@ -73,7 +73,7 @@ export class RoomCanvasDashboardComponent implements OnInit {
 
         if (JSON.stringify(this.oldQuestion.done) === "true") {
           console.log("Answer inside if :" + oldQuestion);
-          this.router.navigate(['/authenticated/canvas']);
+          this.router.navigate(['/canvas']);
         }
       });
 

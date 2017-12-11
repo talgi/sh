@@ -46,17 +46,11 @@ export class AppDataService {
     oldAnswer.token = 666;
     oldAnswer.chosenAnswer = id;
     options.body = JSON.stringify(oldAnswer);
-    //console.log(JSON.stringify(oldAnswer));
-    return Observable.of({
-      question_type: 'bla?',
-      header:'bla bla?',
-      choices:[{num:0, ans:{pic:'cad/armchair.png'}}],
-      done:'true'
-    });
-    /*return this.http.post(this.baseUrl + 'pickStyle/', JSON.stringify(oldAnswer), options)
+
+    return this.http.post(this.baseUrl + 'pickStyle/', JSON.stringify(oldAnswer), options)
       .map(this.extractData)
       .do(data => console.log('Sent Answer: ' + JSON.stringify(data)))
-      .catch(this.handleError);*/
+      .catch(this.handleError);
 
   }
 

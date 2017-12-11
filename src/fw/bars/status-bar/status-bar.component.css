@@ -1,10 +1,13 @@
 :host {
-    display: inline-flex;
-    flex-direction: row;
-    justify-content : space-around;
-    background-color: black; 
-    font-size: 25px;
-    color:white;
-    min-height: 26px;
+    display: block;
+    width: 100%;
+    background-color: white;
+    font-size: 12px;
+    color:black;
+    margin: 5px 0;
+    text-align: center;
+}
 
+:host p {
+  margin: 0;
 }

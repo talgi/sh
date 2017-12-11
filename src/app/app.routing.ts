@@ -22,38 +22,17 @@ import { AuthGuard } from './services/auth-guard.service';*/
 
 export const appRoutes: Routes = [
   /*{ path: 'canvas', component: RoomBlueprintCanvasComponent },*/
-   { path: '', redirectTo: 'authenticated', pathMatch: 'full' },
   { path: 'signin', component: SignInComponent},
   { path: 'register', component: RegisterUserComponent},
-  {  path: 'authenticated', component: AuthenticatedUserComponent,
+  {  path: '', component: AuthenticatedUserComponent,
     children: [
-      { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: 'welcome', component: WelcomeDashboardComponent },
       { path:'about', component: AboutDashboardComponent},
       { path:'contactinfo', component: AboutDashboardComponent},
       { path: 'rooms', component: RoomsDashboardComponent },
       { path: 'proposal', component: ProposalDashboardComponent },
       { path: 'canvas', component: RoomCanvasDashboardComponent/*RoomCanvasComponent*/ },
-         { path: '**', component: WelcomeDashboardComponent },
+      { path: '**', component: WelcomeDashboardComponent },
     ]
   },
-  /*{ path: '', component: AuthenticatedUserComponent },*/
-  { path: '', component: AuthenticatedUserComponent },
-  /*{ path: '**', component: AuthenticatedUserComponent },*/
-  /* { path: 'signin', component: SignInComponent },
-   { path: 'register', component: RegisterUserComponent },
-   { path: 'authenticated', component: AuthenticatedUserComponent, canActivate: [AuthGuard],
-     children: [
-       { path: '', canActivateChild: [AuthGuard],
-         children: [
-           { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-           { path: 'dashboard', component: DashboardComponent },
-           { path: 'country-list/:count', component: CountryListComponent },
-           { path: 'country-detail/:id/:operation', component: CountryDetailComponent },
-           { path: 'country-maint', component: CountryMaintComponent },
-           { path: 'settings', component: SettingsComponent },
-         ] }
-     ] },
-   { path: '', component: SignInComponent },
-   { path: '**', component: SignInComponent }*/
 ];
