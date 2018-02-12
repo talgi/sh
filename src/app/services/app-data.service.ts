@@ -1,33 +1,37 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 
 
-/*import { Country } from '../view-models/country';*/
 import { Room } from '../view-models/room';
 import { Question } from '../view-models/question';
 import { DrawingCordinatesRequest, DrawingCoordinatesResponse, OldAnswer, OldQuestion, ItemData } from '../view-models/old_question';
 import { Item,ProposalItem } from '../view-models/item';
 import { Observable } from 'rxjs/Observable';
 
-//import { UserService } from './user.service';
 
 
 @Injectable()
 export class AppDataService {
-  //DotNet Server
-  //private baseUrl = 'http://localhost:52497/api/questions';
-
-
   //Python Server
   private baseUrl = 'http://javish1.hopto.org:1234/';
 
   constructor(private http: Http) { }
   public coordinates = []
+  private finalDesign = null;
   private dataItemsResponse;
 
+  private resetLayoutEmitter = new EventEmitter<void>();
+  resetLayoutObservable = this.resetLayoutEmitter.asObservable();
 
+  resetLayout() {
+    this.coordinates = [];
+    this.resetLayoutEmitter.emit();
+  }
 
+  getCoordinates() {
+    return this.coordinates;
+  }
   //POST - create
   /* private createProduct(product: IProduct, options: RequestOptions): Observable<IProduct> {
        product.id = undefined;
@@ -54,7 +58,7 @@ export class AppDataService {
 
   }
 
-  getProposal(): Observable<DrawingCoordinatesResponse> {
+  getProposal(): Observable<Object> {
     //Python Server
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
@@ -64,20 +68,12 @@ export class AppDataService {
     request.token = 666;
     request.coordinates = coordinates;
 
-    options.body = JSON.stringify(request);
-    console.log("Request= " + options.body);
+    //options.body = JSON.stringify(request);
+    //console.log("Request= " + options.body);
     //console.log(JSON.stringify(oldAnswer));
     return this.http.post(this.baseUrl + 'roomDraw_ver3/', JSON.stringify(request), options)
       .map(this.extractData)
-      .do(data => {
-        var style = "country";//JSON.stringify(this.dataItemsResponse.style);
-        /*this.items = this.dataItemsResponse.furnitures.map(itemdata => new Item(itemdata.id:1,
-         , itemdata.catalogName: "alsager-end-table-1", name: "table-1", description: "info about this item ..."));*/
-        console.log('Sent Answer: ' + JSON.stringify(data));
-
-      })
       .catch(this.handleError);
-
   }
 
   /*  getQuestion(id: number): Observable<Question> {
@@ -91,10 +87,7 @@ export class AppDataService {
     }*/
 
   private extractData(response: Response) {
-    console.log("extractData");
-    console.log(response);
     let body = response.json();
-    console.log("extractDataBody:" + body);
     return body || {};
   }
 
@@ -142,42 +135,3 @@ export class AppDataService {
     return this.itemDataList;
   }
 }
-
-  /*
-     getCountries()  {
-     return this.countries;
-   }
-
-  createCountry(vm: Country) : Observable<any> {
-     //return Observable.of({}).delay(2000).flatMap(x=>Observable.throw('Unable to create country'));
-     let id = 0;
-     this.countries.forEach(c => { if (c.id >= id) id = c.id+1 });
-     vm.id = id;
-     this.countries.push(vm);
-     return Observable.of(vm);
-   }
-
-   deleteCountry(id: number) : Observable<any> {
-     //return Observable.of({}).delay(2000).flatMap(x=>Observable.throw('Delete error.'));
-     return Observable.of({}).delay(2000)
-      .do(e => this.countries.splice(this.countries.findIndex(c => c.id == id), 1));
-   }
-
- /*  getCountries() : Observable<any> {
-     return Observable.of(this.countries);
-   }
-
-
-   getCountry(id: number) : Observable<Country> {
-     var country = this.countries.find(c => c.id == id);
-     return Observable.of(country);
-   }
-
-   updateCountry(updatedCountry: Country) : Observable<any> {
-     var country = this.countries.find(c => c.id == updatedCountry.id);
-     Object.assign(country, updatedCountry);
-     return Observable.of(country).delay(2000);
-     //return Observable.of({}).delay(2000).flatMap(x=>Observable.throw(''));
-   }
-   */
-

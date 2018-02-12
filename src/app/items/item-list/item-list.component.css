@@ -3,10 +3,9 @@
         flex-grow: 1;
 display: flex;
 flex-direction: row;
-width:50%;
 /*border: solid 4px blue;*/
 /*grid-template-rows:15em 15em 15em 15em;*/
-    
+
 }
 .items-row{
  flex-grow: 1;

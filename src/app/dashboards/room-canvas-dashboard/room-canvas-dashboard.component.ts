@@ -7,28 +7,6 @@ import { trigger, state, style, transition, animate, keyframes, Input } from '@a
   selector: 'room-canvas-dashboard',
   templateUrl: './room-canvas-dashboard.component.html',
   styleUrls: ['./room-canvas-dashboard.component.css'],
-  animations: [
-    trigger(/*'focusButton'*/'focusPanel', [
-      state('inactive-start', style({
-        background: '#3fb5b7',
-        border: '1px solid #ffffff',
-        color:'#ffffff'
-        //transform: 'scale(1)'
-      })),
-      state('active-start', style({
-
-        //transform: 'scale(1.12)',
-        //opacity: 0.7,
-       background: '#ffffff',
-       border: '1px solid #3fb5b7',
-       color:'#3fb5b7'
-
-
-      })),
-      transition('inactive-start => active-start', animate('400ms ease-in')),
-      transition('active-start => inactive-start', animate('400ms ease-out'))
-    ])
-  ]
 })
 export class RoomCanvasDashboardComponent implements OnInit {
 
@@ -39,49 +17,16 @@ export class RoomCanvasDashboardComponent implements OnInit {
   ngOnInit() {
   }
 
-  toggleFocus() {
-    this.state = (this.state === 'inactive-start' ? 'active-start' : 'inactive-start');
+  canSubmit() {
+    return this.dataService.getCoordinates().length > 0;
   }
 
-  toggle() {
-    this.state = (this.state === 'inactive-start' ? 'active-start' : 'inactive-start');
+  clearBoard() {
+    this.dataService.resetLayout();
   }
-
-  onClick() {
-    this.router.navigate(['/proposal']);
-
-    /*console.log("itemID:" + room.id);
-    console.log("isFirst:" + this.isFirst);
-    var roomId = room.id;
-    if (this.isFirst == true) {
-     roomId = 0;
+  submitLayout() {
+    if (this.canSubmit()) {
+      this.dataService.getProposal().subscribe(() => {this.router.navigate(['/proposal']);});
     }
-
-     console.log("RoomId:" +  roomId);
-    this.dataService.getOldQuestion(roomId).subscribe(
-
-      oldQuestion => {
-        this.oldQuestion = oldQuestion;
-
-        //else{
-        this.itemClickedE.emit(this.oldQuestion);
-        this.rooms = this.oldQuestion.choices.map(c => new MyRoom(c.num, c.ans.pic));
-        this.isFirst = false;
-        console.log("Answer :" + oldQuestion);
-        console.log("Answer :" + JSON.stringify(this.oldQuestion));
-        console.log("Answer Done?:" + JSON.stringify(this.oldQuestion.done));
-
-        if (JSON.stringify(this.oldQuestion.done) === "true") {
-          console.log("Answer inside if :" + oldQuestion);
-          this.router.navigate(['/canvas']);
-        }
-      });
-
-    //let rooms : Array<Room> = [];
-
   }
-    //send request*/
-  }
-
-
 }

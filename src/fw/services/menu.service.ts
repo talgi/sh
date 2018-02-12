@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 export interface MenuItem {
     text: string,
     icon: string,
-    route: string,
+    route?: string,
+    href?: string,
     submenu: Array<MenuItem>
 }
 
@@ -24,5 +25,5 @@ export class MenuService {
   toggleMenuOrientation() {
     this.isVertical = !this.isVertical;
   }*/
-  
+
 }

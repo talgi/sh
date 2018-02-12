@@ -1,28 +1,33 @@
 <nav >
   <ul >
-    <li *ngFor="let item of menuService.items"> 
-  
+    <li *ngFor="let item of menuService.items">
+
      <!-- <fw-menu-item [item]="item"
                     [ngClass]="{'vertical-menu': menuService.isVertical }"
                     [parentIsPopup]="false">
-      </fw-menu-item>-->         
-   <a 
-    [routerLink]="item.route"  routerLinkActive="router-link-active">
-      <h3 >{{ item.text.toUpperCase() }}  </h3>
+      </fw-menu-item>-->
+    <a
+      *ngIf="!!item.route" [routerLink]="item.route" routerLinkActive="router-link-active">
+      {{ item.text.toUpperCase() }}
     </a>
-         
+    <a
+      *ngIf="!item.route" [href]="item.href" target="_blank">
+      {{ item.text.toUpperCase() }}
+    </a>
 
-   
-     <!--[ngClass]="{'router-link-active': isActiveRoute }">-->  
+
+
+
+     <!--[ngClass]="{'router-link-active': isActiveRoute }">-->
      <!-- <fw-menu-item [item]="item"  [ngClass]="{'vertical-menu': menuService.isVertical }">
       </fw-menu-item>-->
-      
+
     </li>
   </ul>
 </nav>
 
 <!--
-<button 
+<button
       *ngIf="!menuService.showingLeftSideMenu"
       class="btn btn-sm"
       [ngClass]="{'horizontal': !menuService.isVertical }"

@@ -31,7 +31,7 @@ export class ProposalDashboardComponent implements OnInit {
     let itemDataList = this.dataService.getItemsData();
     console.log("First Item" + itemDataList[0].width);
     for (let entry of itemDataList) {
-      
+
 
       console.log(entry.furniture); // 1, "string", false
     }

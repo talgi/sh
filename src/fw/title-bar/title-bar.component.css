@@ -3,7 +3,7 @@
     background-color: white;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
     display: flex;
-    min-height: 80px;
+    min-height: 20px;
     position: fixed;
     width: 100%;
     z-index:100;
@@ -12,17 +12,16 @@
 
 .menu-area {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-grow: 1;
     padding-right: 50px;
 }
 
 
 .small-image-holder {
-    flex-grow: 1;
-    margin: 20px 40px 20px 80px;
+    margin: 15px 30px 15px 60px;
 }
 
 .small-image {
-    height: 50px;
+    height: 30px;
 }

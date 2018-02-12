@@ -4,19 +4,17 @@ flex-direction: row;
 }
 
 .all{
-      /* border:10px solid red;*/
-      display: flex;
-      flex-direction: row;
-      
-      align-content: space-around;
-     /*justify-content: space-around;
-      align-items: stretch;*/
+  padding-top:20px;
+  align-content: space-around;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
 .canvas{
-    margin-left: 70px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
-
 
 #popup
 {
@@ -26,8 +24,8 @@ flex-direction: row;
     background-color: red;
     right:400px;*/
     position:absolute;
-    z-index: 1; 
-    
+    z-index: 1;
+
 }
 
 .popup {
@@ -38,7 +36,7 @@ flex-direction: row;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;     z-index: 1; 
+    user-select: none;     z-index: 1;
 }
 
 /* The actual popup */
@@ -46,7 +44,7 @@ flex-direction: row;
     visibility: hidden;
     width: 300px;
     background-color: white;
-    
+
     color: Black;
     text-align: center;
 
@@ -71,12 +69,12 @@ flex-direction: row;
     border-radius: 5px;
     height:100px;
     width:100px;
-  
+
 }
 
 /* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
-    from {opacity: 0;} 
+    from {opacity: 0;}
     to {opacity: 1;}
 }
 
@@ -124,5 +122,5 @@ flex-direction: row;
     background-color: red;
     position:absolute;
     right:400px;
-      z-index: 1;    
+      z-index: 1;
 }*/

@@ -25,26 +25,34 @@ export class RoomCanvasComponent implements OnInit {
 
   private isDrawingMode = true;
 
-  //private circles = [];
-  //private circleLines = [];
   private currLine;
   private currText;
   private currCircle;
-  //private firstCircle;
 
   //booleans:
   private isCreateLine = false;
 
-
-
-  private isNodeSelected = false;
-
-
+  private circleRadius = 10;
 
   constructor(private ele: ElementRef, private dataService: AppDataService) { }
 
   ngOnInit() {
-
+    this.dataService.resetLayoutObservable.subscribe(() => {
+      for (let l of this.lines) {
+        l.text && l.text.remove();
+        l.remove();
+      }
+      for (let c of this.circles) {
+        c.remove();
+      }
+      this.lines = [];
+      this.circles = [];
+      this.currLine = null;
+      this.currText = null;
+      this.currCircle = null;
+      this.isDrawingMode = true;
+      this.isCreateLine = false;
+    });
     this.setCanvas();
 
     /************************************************************/
@@ -63,32 +71,29 @@ export class RoomCanvasComponent implements OnInit {
 
         if (this.isCreateLine == true && this.isDrawingMode == true) {
           console.log("on mouse move");
-          var pointer = this.canvas.getPointer(options.e);
+          var pointer = this.getPointer(options.e);
 
-          //this.currLine.set({ x2: pointer.x - 6, y2: pointer.y - 6 });
-          this.currLine.setLine(this.currLine, pointer);
-          this.currLine.setText(this.currText, this.currLine);
-          //this.currText.set({ left: pointer.x - 6, top: pointer.y - 6 });
+          this.currLine.setLine(pointer);
           this.canvas.renderAll(); //}
-          //console.log(options.e);
+          if (this.doesIntersect(this.currLine)) {
+            this.currLine.setStroke('orange');
+          } else {
+            this.currLine.setStroke('red');
+          }
         }
-        // this.canvas.renderAll();
       }
     });
 
     this.canvas.on({
       'mouse:down': (options) => {
-        if (options.target && options.target.type != 'circle' && this.isDrawingMode == true) {
-          console.log("on mouse down");
-
-
+        let pointer = this.getPointer(options.e);
+        if (this.currLine && this.currLine.stroke === 'orange') {
+            return;
+        } else if (options.target && options.target.type != 'circle' && this.isDrawingMode == true) {
           this.isCreateLine = true;
-          let pointer = this.canvas.getPointer(options.e);
           let points = [pointer.x, pointer.y, pointer.x, pointer.y];
 
           if (this.circles.length == 0) {
-            console.log('length = 0');
-
             this.currText = this.makeText();
             this.currLine = this.makeLine(points, this.currText);
 
@@ -96,84 +101,117 @@ export class RoomCanvasComponent implements OnInit {
             var line2 = this.currLine;
 
             this.currCircle = this.makeCircle(
-              this.currLine.get('x1') - 4,
-              this.currLine.get('y1') - 4,
+              pointer.x,
+              pointer.y,
               line1, line2);
-          }
-          else {
-            console.log('length%2 != 0');
-            let pointer = this.canvas.getPointer(options.e);
-            let points = [this.currLine.get('x2'), this.currLine.get('y2'), pointer.x, pointer.y];
+          } else {
+            // If line is on same plane, move circle
+            if (this.currCircle.line1 && (this.currCircle.line1.isHorizontal() === this.currLine.isHorizontal())) {
+              this.currCircle.line1.setLine(pointer);
+              this.currCircle.set('left', this.currCircle.line1.get('x2'));
+              this.currCircle.set('top', this.currCircle.line1.get('y2'));
+              this.currLine.set('x1', this.currCircle.line1.get('x2'));
+              this.currLine.set('y1', this.currCircle.line1.get('y2'));
+              this.currLine.setLine(pointer);
+              return;
+            } else {
+              let points = [this.currLine.get('x2'), this.currLine.get('y2'), pointer.x, pointer.y];
+              this.currLine.setLine(pointer);
+              this.currText = this.makeText();
+              line1 = this.currLine;
+              line2 = this.makeLine(points, this.currText);
 
-            //this.currLine.set({ x2: pointer.x, y2: pointer.y });
-            this.currLine.setLine(this.currLine, pointer);
+              this.currCircle = this.makeCircle(this.currLine.get('x2'),
+                this.currLine.get('y2'),
+                line1, line2);
 
-            this.currText = this.makeText();
-            line1 = this.currLine;
-            line2 = this.makeLine(points, this.currText);
-
-
-            this.currCircle = this.makeCircle(this.currLine.get('x2') - 4,
-              this.currLine.get('y2') - 4,
-              line1, line2);
-
-            this.currLine = line2;
-
+              this.currLine = line2;
+            }
           }
 
 
           this.canvas.add(this.currText);
           this.canvas.add(this.currLine);
-          this.lines.push(this.currLine);
-          this.canvas.sendToBack(this.currLine);
           this.canvas.add(this.currCircle);
+          this.canvas.sendToBack(this.currLine);
           this.canvas.bringForward(this.currCircle);
-          //this.canvas.sendToBack(this.currLine);
+          this.canvas.bringForward(this.currText);
+          this.lines.push(this.currLine);
           this.circles.push(this.currCircle);
-          //console.log(this.circles[0].get('left'));
-          //console.log(options.target.type);
-          //console.log(options.e.clientX + ',' + options.e.clientY);
         }
         else {
-
+          console.log(options.target === this.circles[0])
           if (
-            options.target
-            && options.target.get('left') == this.circles[0].get('left')
-            && options.target.get('top') == this.circles[0].get('top')
-            && this.circles.length >= 3
-            && this.isDrawingMode == true) {
+            this.circles.length >= 3 &&
+            options.target === this.circles[0] &&
+            this.isDrawingMode == true &&
+            this.currLine.isHorizontal() !== this.circles[0].line2.isHorizontal()
+           ) {
 
-            //let pointer = this.canvas.getPointer(options.e);
+            //let pointer = this.getPointer(options.e);
             //let points = [pointer.x, pointer.y, pointer.x, pointer.y];
             this.circles[0].line1 = this.currLine;
             let firstLine = this.circles[0].line2;
             if (firstLine.get('x2') != firstLine.get('x1')) {
               firstLine.set({ x1: this.circles[0].line1.get('x2') });
-              this.circles[0].left = firstLine.get('x1') - 4;
+              this.circles[0].left = firstLine.get('x1');
             }
             //this.circles[0].line2.set({x1:this.currLine.get('x2')});
             //this.circles[0].line2.set({y1:this.currLine.get('y2')});
             this.isCreateLine = false;
             this.isDrawingMode = false;
             this.setCoordinants();
-
-            //console.log("Circles length:" + this.circles.length);
-            //console.log("Circles[0] left:" + this.circles[0].get('left'));
-            //console.log("options.target left:" + options.target.get('left'));
-
-            //this.isDrawingMode=true;
-
           }
         }
       }
     });
-
-    this.canvas.on('mouse:over', function (e) {
-      // e.target.setFill('red');
-    });
   }
 
+  lineIntersect(p0_x, p0_y, p1_x, p1_y, p2_x, p2_y, p3_x, p3_y) {
+    var s02_x, s02_y, s10_x, s10_y, s32_x, s32_y, s_numer, t_numer, denom;
+    s10_x = p1_x - p0_x;
+    s10_y = p1_y - p0_y;
+    s32_x = p3_x - p2_x;
+    s32_y = p3_y - p2_y;
 
+    denom = s10_x * s32_y - s32_x * s10_y;
+    if (denom === 0)
+        return 0; // Collinear
+    let denomPositive = denom > 0;
+
+    s02_x = p0_x - p2_x;
+    s02_y = p0_y - p2_y;
+    s_numer = s10_x * s02_y - s10_y * s02_x;
+    if ((s_numer <= 0) == denomPositive)
+        return 0; // No collision
+    if (s_numer === 0)
+      return 0;
+
+    t_numer = s32_x * s02_y - s32_y * s02_x;
+    if ((t_numer <= 0) == denomPositive)
+        return 0; // No collision
+
+    if (((s_numer >= denom) == denomPositive) || ((t_numer >= denom) == denomPositive))
+        return 0; // No collision
+    return 1;
+  }
+
+  doesIntersect(line) {
+    for (let l of this.lines) {
+      if (l!==line && this.lineIntersect(l.x1, l.y1, l.x2, l.y2, line.x1, line.y1, line.x2, line.y2)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getPointer(event) {
+    let pointer = this.canvas.getPointer(event);
+    return {
+      x: pointer.x + 2,
+      y: pointer.y + 2,
+    }
+  }
 
   setCoordinants() {
     for (let l of this.lines) {
@@ -189,21 +227,18 @@ export class RoomCanvasComponent implements OnInit {
 
   setLine(line, pointer) {
     console.log("on set line ");
-    var tDeltaX = Math.abs(pointer.x - 4 - line.get('x1'));
-    var tDeltaY = Math.abs(pointer.y - 4 - line.get('y1'));
+    var tDeltaX = Math.abs(pointer.x - line.get('x1'));
+    var tDeltaY = Math.abs(pointer.y - line.get('y1'));
     if (tDeltaX > tDeltaY) {
-      line.set({ x2: pointer.x - 4, y2: line.get('y1') });
+      line.set({ x2: pointer.x, y2: line.get('y1') });
     }
     else {
-      line.set({ y2: pointer.y - 4, x2: line.get('x1') });
+      line.set({ y2: pointer.y, x2: line.get('x1') });
     }
-    let angle = tDeltaY / tDeltaX;
-
-    console.log('tDeltaX:' + tDeltaX + ' tDeltaY:' + tDeltaY + ' angle:' + angle);
+    line.setText();
   }
 
-  setText(text, line) {
-    console.log('setText');
+  setText(line) {
     let l1x1 = line.get('x1');
     let l1y1 = line.get('y1');
     let l1x2 = line.get('x2');
@@ -214,9 +249,9 @@ export class RoomCanvasComponent implements OnInit {
 
     var tDeltaX = l1x2 - l1x1;
     var tDeltaY = l1y2 - l1y1;
-    let length = Math.sqrt(tDeltaX * tDeltaX + tDeltaY * tDeltaY).toFixed(2).toString();
+    let length = (2*(tDeltaX + tDeltaY)).toFixed(2).toString();
 
-    text.set({ 'left': txpos + 20, 'top': typos + 20, 'text': length });
+    line.text.set({ 'left': txpos + 20, 'top': typos + 20, 'text': length });
   }
 
   makeText() {
@@ -239,14 +274,16 @@ export class RoomCanvasComponent implements OnInit {
       selectable: false,
       hasBorders: false,
       hasControls: false,
+      originX: 'center',
+      originY: 'center',
     });
 
     l.text = text;
     l.text.left = coords[0];
     l.text.top = coords[1];
-    l.setLine = this.setLine;
-    l.setText = this.setText;
-
+    l.setLine = this.setLine.bind(this, l);
+    l.setText = this.setText.bind(this, l);
+    l.isHorizontal = () => { return l.get('y1') === l.get('y2'); };
 
     return l;
   }
@@ -256,10 +293,12 @@ export class RoomCanvasComponent implements OnInit {
       left: left,
       top: top,
       strokeWidth: 5,
-      radius: 6,
+      radius: this.circleRadius,
       fill: '#fff',
       stroke: '#666',
-      selectable: false
+      selectable: false,
+      originX: 'center',
+      originY: 'center',
     });
     c.hasControls = c.hasBorders = false;
 
@@ -284,18 +323,6 @@ export class RoomCanvasComponent implements OnInit {
 
     var grid = 25;//size of snaps
     var measurementThickness = 60
-
-    this.canvas.add(new fabric.Rect({
-      left: 0,
-      top: 0,
-      fill: 'transparent',
-
-      width: measurementThickness,
-      height: 1000,
-      evented: false,
-      selectable: false,
-      selection: false
-    }));
 
 
     //upper 1's
@@ -358,12 +385,6 @@ export class RoomCanvasComponent implements OnInit {
       // left
       this.canvas.add(new fabric.Line([measurementThickness - tickSize, location1, measurementThickness, location1],
         { stroke: /*'#888'*/color, selectable: false, evented: false }));
-      /*this.canvas.add(new fabric.Text(count + 'm'/*"\"", {
-        left: measurementThickness - (tickSize * 2) - 7,
-        top: location1,
-        fontSize: 12,
-        fontFamily: 'san-serif'
-      }));*/
 
       if (isFoot || i == 0) {
         //console.log("Dot Cordinants:x:" + measurementThickness + " y: "+ location1)
@@ -387,7 +408,6 @@ export class RoomCanvasComponent implements OnInit {
 
         this.canvas.add(new fabric.Line([measurementThickness - tickSizeHalf, location1, measurementThickness, location1],
           { stroke: /*'#222'*/color, selectable: false, evented: false }));
-        console.log("measurementThickness - tickSizeHalf:" + (measurementThickness - tickSizeHalf) + ' location1: ' + location1 + ' measurementThickness: ' + measurementThickness + '  location1: ' + location1);
       }
 
 
@@ -424,169 +444,5 @@ export class RoomCanvasComponent implements OnInit {
 
       count++;
     }
-
-    // snap to grid
-
-    this.canvas.on('object:moving', function (options) {
-
-      console.log('on object:moving');
-      options.target.set({
-        left: Math.round(options.target.left / grid) * grid,
-        top: Math.round(options.target.top / grid) * grid
-      });
-
-
-      var p = options.target;
-      p.line1 && p.line1.set({ 'x2': p.left + 1, 'y2': p.top + 1 });
-      p.line2 && p.line2.set({ 'x1': p.left + 1, 'y1': p.top + 1 });
-
-      if (p.line1 != null && p.line1.text) {
-        p.line1.setText(p.line1.text, p.line1);
-
-      }
-      if (p.line2 != null) {
-        p.line2.setText(p.line2.text, p.line2);
-
-      }
-    });
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-/*     for (let l of this.lines) {
-              var point = new Point();
-              point.x = l.get('x1');
-              point.y = l.get('y1');
-              console.log("line X:" + point.x + "line Y:" + point.y);
-
-
-              if (i > 0) {
-                point = new Point();
-                point.x = l.get('x1');
-                point.y = l.get('y1');
-                let prvPoint = this.points[i - 1];
-                  console.log("PrvPointX:" + prvPoint.x + "PrvPointY:" + prvPoint.y);
-                if (prvPoint.x != l.get('x1')) {
-                  point.x = prvPoint.x + (Math.abs(prvPoint.x - l.get('x1')) * 2);
-                }
-                if (prvPoint.y != l.get('y1')) {
-                  point.y = prvPoint.y + (Math.abs(prvPoint.y - l.get('y1')) * 2);
-                }
-              }
-
-              this.points.push(point);
-              console.log("X:" + point.x + " Y:" + point.y);
-              i++;
-
-            } */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*this.canvas.onmousedown = function (e) {
-      // React to the mouse down event
-      console.log(e);
-    };
-
-    this.canvas.onmousemove = function (e) {
-      console.log(e);
-      var loc = this.windowToCanvas(this.canvas, e.clientX, e.clientY);
-
-      //this.drawBackground();
-      //this.drawSpritesheet();
-      this.drawGuidelines(loc.x, loc.y);
-      //this.updateReadout(loc.x, loc.y);
-    };
-
-  }
-
-  drawGuidelines(x, y) {
-    this.context.strokeStyle = 'rgba(0,0,230,0.8)';
-    this.context.lineWidth = 0.5;
-    this.drawVerticalLine(x);
-    this.drawHorizontalLine(y);
-  }
-
-  drawHorizontalLine(y) {
-    console.log(y);
-    this.context.beginPath();
-    this.context.moveTo(0, y + 0.5);
-    this.context.lineTo(this.context.canvas.width, y + 0.5);
-    this.context.stroke();
-  }
-
-  drawVerticalLine(x) {
-    console.log(x);
-    this.context.beginPath();
-    this.context.moveTo(x + 0.5, 0);
-    this.context.lineTo(x + 0.5, this.context.canvas.height);
-    this.context.stroke();
-  }
-
-  windowToCanvas(canvas, x, y) {
-    var bbox = canvas.getBoundingClientRect();
-
-    return {
-      x: x - bbox.left * (canvas.width / bbox.width),
-      y: y - bbox.top * (canvas.height / bbox.height)
-    };
-  }
-  /*  drawBackground() {
-        var VERTICAL_LINE_SPACING = 12;
-        let i = this.contextcontext.canvas.height;
-
-        this.context.clearRect(0, 0, canvas.width, canvas.height);
-        this.context.strokeStyle = 'lightgray';
-        this.context.lineWidth = 0.5;
-
-        while (i > VERTICAL_LINE_SPACING * 4) {
-          this.context.beginPath();
-          this.context.moveTo(0, i);
-          this.context.lineTo(this.context.canvas.width, i);
-          this.context.stroke();
-          i -= VERTICAL_LINE_SPACING;
-        }
-      }
-
-      drawSpritesheet() {
-        this.context.drawImage(spritesheet, 0, 0);
-      }
-
-
-
-      updateReadout(x, y) {
-        readout.innerText = '(' + x.toFixed(0) + ', ' + y.toFixed(0) + ')';
-      }
-
-
-}   */

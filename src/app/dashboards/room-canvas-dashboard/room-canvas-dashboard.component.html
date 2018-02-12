@@ -7,36 +7,13 @@
   </div>
 
   <div class="flex-container" fxLayout="row" fxLayoutAlign="center">
-
-    <!--<div fxFlex="100" class="canvas--wrap">-->
+    <div class="button-container"></div>
     <room-canvas>
     </room-canvas>
 
-    <!--<div fxFlex="350px" class="side--menu">
-    <button type="button" class="btn btn-primary">Draw</button>
-  </div>-->
-
-    <!-- <div className="canvas-side">
-      <div className="col-md-3"></div>
-      <div className="col-md-6">
-        <div className="canvas-wraper">
-          <span>sdfsdf</span>
-        </div>
-      </div>
-    </div>
-
-
-    <div className="actions text-center">
-      <a  className="green-btn next">Save drawing </a>
-      <a  className="grey-btn next">Clear Board</a>
-    </div>-->
-    <div fxFlex="350px" class="side--menu">
-      <div class="start-btn">
-        <a class="start-btn content" [routerLink]="['/proposal']" [@focusPanel]='state' on-mouseover='toggleFocus()' on-mouseleave='toggleFocus()'>Save Drawing</a>
-      </div>
-      <div class="start-btn">
-        <a class="start-btn content" >Clear Board</a>
-      </div>
+    <div fxFlex="350px" class="button-container">
+      <a class="start-btn command" (click)="submitLayout()" [ngClass]="{enabled: canSubmit()}">Submit Layout</a>
+      <a class="command" (click)="clearBoard()">Clear Board</a>
     </div>
   </div>
   <!--style={{ width: '500px', margin: 'auto' }} </div>-->

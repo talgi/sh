@@ -16,7 +16,7 @@ export let initialMenuItems: Array<MenuItem> = [
         {
         text: 'CONTACT US',
         icon: 'glyphicon-dashboard',
-        route: '/contactinfo',
+        href: 'mailto:alonig@gmail.com',
         submenu: null
     }
 ];
